@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,8 +28,10 @@ public class InputSignals : MonoBehaviour
     //public UnityAction<bool> onInputStateChanged = delegate { };
     public UnityAction onInputTaken = delegate { };
     public UnityAction onInputReleased = delegate { };
-    public UnityAction<HorizontalInputParams> onInputDragged = delegate { };
-
     //Params ifadesi parametrenin kýsaltmasýdýr. Bunun bir veri paslayýcýsý olduðunu temsil ediyor.
-
+    public UnityAction<HorizontalInputParams> onInputDragged = delegate { };
+    public UnityAction<bool> onAvailableForTouch = delegate { };
+    public UnityAction<bool> onTouchingFinished = delegate { };
+    public UnityAction<bool, bool, Vector2?> onTouchingStarted = delegate { };
+    public Action<bool, Vector2?, InputData, float3, float> onTouchingContinues = delegate { };
 }
