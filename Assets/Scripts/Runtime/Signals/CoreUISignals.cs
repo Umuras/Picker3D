@@ -22,6 +22,8 @@ public class CoreUISignals : MonoBehaviour
 
     #endregion
 
+    //onOpenPaneldeki int parametresi layer kontrolü yapýyor, layer 2 en önde gözüken panel olacak layer 0 ise en arkada görünen panel olacak.
+    //TryGetComponent, GetComponent, gerektikçede FindWithTag kullanabilirsin, diðerlerini kullanma.
     public UnityAction<UIPanelTypes, int> onOpenPanel = delegate { };
     public UnityAction<int> onClosePanel = delegate { };
     public UnityAction onCloaseAllPanels = delegate { };
