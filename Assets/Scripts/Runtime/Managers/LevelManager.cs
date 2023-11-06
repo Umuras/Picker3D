@@ -34,6 +34,8 @@ public class LevelManager : MonoBehaviour
        _levelData = GetLevelData();
         //Burada Aktif Level bilgisini alýyoruz.
        _currentLevel = GetActiveLevel();
+
+        Init();
     }
 
     private void Init()
@@ -155,7 +157,7 @@ public class LevelManager : MonoBehaviour
         //olsun 20 den yukarý bir sonuç çýkmayacak. Örnek 21 % 20 = 1 1.seviye oyuna gelecek
         //39 % 20 = 19 uncu seviye oyuna gelecek þeklinde.
         CoreGameSignals.Instance.onLevelInitialize?.Invoke((byte)(_currentLevel % totalLevelCount));
-        //UISignals
+        CoreUISignals.Instance.onOpenPanel?.Invoke(UIPanelTypes.Start, 1);
     }
 
     
