@@ -30,6 +30,7 @@ namespace Assets.Scripts.Managers
         private void Awake()
         {
             _data = GetInputData();
+            Init();
         }
 
         private void Init()
