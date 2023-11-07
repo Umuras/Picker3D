@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour
         CoreUISignals.Instance.onClosePanel?.Invoke(1);
         //Oyunumuzu baþlattýðýmýz için Inputu aktif hale getiriyoruz.
         InputSignals.Instance.onEnableInput?.Invoke();
-        //CameraSignals.Instance.onSetCameraTarget?.Invoke();
+        CameraSignals.Instance.onSetCameraTarget?.Invoke();
     }
 
     public void NextLevel()

@@ -43,6 +43,7 @@ public class OnTouchingContinuesCommand
                         HorizontalValue = moveVector.x,
                         ClampValues = _data.ClampValues
                     });
+                    Debug.LogWarning("Executed---> OnInputDragged");
                 }
             }
         }

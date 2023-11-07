@@ -32,8 +32,8 @@ public class CameraManager : MonoBehaviour
 
     private void OnSetCameraTarget()
     {
-        //Transform player = FindObjectOfType<PlayerManager>().transform;
-        //virtualCamera.Follow = player;
+        Transform player = FindObjectOfType<PlayerManager>().transform;
+        virtualCamera.Follow = player;
         //virtualCamera.LookAt = player;
     }
 

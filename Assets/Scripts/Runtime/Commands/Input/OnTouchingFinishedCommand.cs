@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OnTouchingFinishedCommand : MonoBehaviour
+public class OnTouchingFinishedCommand
 {
     public delegate bool IsPointerOverUIElement();
     public IsPointerOverUIElement _isPointerOverUIElement;
