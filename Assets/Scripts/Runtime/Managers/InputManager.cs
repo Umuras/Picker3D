@@ -21,7 +21,6 @@ namespace Assets.Scripts.Managers
         //Sonundaki soru işareti ref type olduğunu belli ediyor. Geçici değişken demek.
         private Vector2? _mousePosition;
 
-        private OnAvailableForTouchCommand _availableForTouchCommand;
         private OnTouchingFinishedCommand _touchingFinishedCommand;
         private OnTouchingStartedCommand _touchingStartedCommand;
         private OnTouchingContinuesCommand _touchingContinuesCommand;
@@ -35,7 +34,6 @@ namespace Assets.Scripts.Managers
 
         private void Init()
         {
-            _availableForTouchCommand = new OnAvailableForTouchCommand();
             _touchingFinishedCommand = new OnTouchingFinishedCommand(IsPointerOverUIElement);
             _touchingStartedCommand = new OnTouchingStartedCommand(IsPointerOverUIElement);
             _touchingContinuesCommand = new OnTouchingContinuesCommand(IsPointerOverUIElement);
@@ -58,7 +56,6 @@ namespace Assets.Scripts.Managers
             CoreGameSignals.Instance.onReset += OnReset;
             InputSignals.Instance.onEnableInput += OnEnableInput;
             InputSignals.Instance.onDisableInput += OnDisableInput;
-            InputSignals.Instance.onAvailableForTouch += _availableForTouchCommand.Execute;
             InputSignals.Instance.onTouchingFinished += _touchingFinishedCommand.Execute;
             InputSignals.Instance.onTouchingStarted += _touchingStartedCommand.Execute;
             InputSignals.Instance.onTouchingContinues += _touchingContinuesCommand.Execute;
@@ -100,7 +97,6 @@ namespace Assets.Scripts.Managers
             CoreGameSignals.Instance.onReset -= OnReset;
             InputSignals.Instance.onEnableInput -= OnEnableInput;
             InputSignals.Instance.onDisableInput -= OnDisableInput;
-            InputSignals.Instance.onAvailableForTouch -= _availableForTouchCommand.Execute;
             InputSignals.Instance.onTouchingFinished -= _touchingFinishedCommand.Execute;
             InputSignals.Instance.onTouchingStarted -= _touchingStartedCommand.Execute;
             InputSignals.Instance.onTouchingContinues -= _touchingContinuesCommand.Execute;
@@ -211,7 +207,11 @@ namespace Assets.Scripts.Managers
 
         private void Update()
         {
-            InputSignals.Instance.onAvailableForTouch?.Invoke(_isAvailableForTouch);
+            if (!_isAvailableForTouch)
+            {
+                return;
+            }
+
             InputSignals.Instance.onTouchingFinished?.Invoke(_isTouching);
             InputSignals.Instance.onTouchingStarted?.Invoke(_isTouching, _isFirstTimeTouchTaken, _mousePosition);
             InputSignals.Instance.onTouchingContinues?.Invoke(_isTouching, _mousePosition, _data, _moveVector, _currentVelocity);
