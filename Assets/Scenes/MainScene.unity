@@ -610,7 +610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0d6bf3cdc9d1548870f3d435859b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axis: 0
+  lockAxis: 0
   XClampValue: 0
 --- !u!1 &1364032819
 GameObject:
