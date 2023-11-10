@@ -25,6 +25,23 @@ namespace Assets.Scripts.Managers
         private OnTouchingStartedCommand _touchingStartedCommand;
         private OnTouchingContinuesCommand _touchingContinuesCommand;
 
+        public bool IsFirstTimeTouchTaken
+        {
+            get { return _isFirstTimeTouchTaken; }
+            set { _isFirstTimeTouchTaken = value; }
+        }
+
+        public bool IsTouching
+        {
+            get { return _isTouching; }
+            set { _isTouching = value; }
+        }
+
+        public Vector2? MousePosition
+        {
+            get { return _mousePosition; }
+            set { _mousePosition = value; }
+        }
 
         private void Awake()
         {
@@ -212,9 +229,9 @@ namespace Assets.Scripts.Managers
                 return;
             }
 
-            InputSignals.Instance.onTouchingFinished?.Invoke(_isTouching);
-            InputSignals.Instance.onTouchingStarted?.Invoke(_isTouching, _isFirstTimeTouchTaken, _mousePosition);
-            InputSignals.Instance.onTouchingContinues?.Invoke(_isTouching, _mousePosition, _data, _moveVector, _currentVelocity);
+            InputSignals.Instance.onTouchingFinished?.Invoke(_isTouching, this);
+            InputSignals.Instance.onTouchingStarted?.Invoke(_isTouching, _isFirstTimeTouchTaken, _mousePosition,this);
+            InputSignals.Instance.onTouchingContinues?.Invoke(_isTouching, _mousePosition, _data, _moveVector, _currentVelocity,this);
         }
         //IsPointerOverUIElementin yaptığı iş, Canvastan alacağımız için Inputu, çünkü Canvas ekranın en önünde bulunuyor,
         //Kameranın bile önünde bulunuyor, biz Inputu ancak oradan alabiliriz, EventSystem bu şekilde çalıştığından ötürü,

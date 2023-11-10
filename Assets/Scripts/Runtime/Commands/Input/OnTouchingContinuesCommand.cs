@@ -1,3 +1,4 @@
+using Assets.Scripts.Managers;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
@@ -13,7 +14,7 @@ public class OnTouchingContinuesCommand
         _isPointerOverUIElement = isPointerOverUIElement;
     }
 
-    public void Execute(bool isTouching, Vector2? mousePosition, InputData _data, float3 moveVector, float currentVelocity)
+    public void Execute(bool isTouching, Vector2? mousePosition, InputData _data, float3 moveVector, float currentVelocity, InputManager manager)
     {
         if (Input.GetMouseButton(0) && !_isPointerOverUIElement.Invoke())
         {
@@ -22,21 +23,23 @@ public class OnTouchingContinuesCommand
                 if (mousePosition != null)
                 {
                     Vector2 mouseDeltaPos = (Vector2)Input.mousePosition - mousePosition.Value;
-                    if (mouseDeltaPos.x > _data.HorizontalInputSpeed)
-                    {
-                        moveVector.x = _data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
-                    }
-                    else if (mouseDeltaPos.x < _data.HorizontalInputSpeed)
-                    {
-                        moveVector.x = -_data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
-                    }
-                    else
-                    {
-                        moveVector.x = Mathf.SmoothDamp(-moveVector.x, 0f, ref currentVelocity,
-                            _data.ClampSpeed);
-                    }
+                    //if (mouseDeltaPos.x > _data.HorizontalInputSpeed)
+                    //{
+                    //    moveVector.x = _data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
+                    //}
+                    //else if (mouseDeltaPos.x < _data.HorizontalInputSpeed)
+                    //{
+                    //    moveVector.x = -_data.HorizontalInputSpeed / 10f * mouseDeltaPos.x;
+                    //}
+                    //else
+                    //{
+                    //    moveVector.x = Mathf.SmoothDamp(-moveVector.x, 0f, ref currentVelocity,
+                    //        _data.ClampSpeed);
+                    //}
+                    moveVector.x = mouseDeltaPos.x;
 
                     mousePosition = Input.mousePosition;
+                    manager.MousePosition = mousePosition;
 
                     InputSignals.Instance.onInputDragged?.Invoke(new HorizontalInputParams()
                     {
