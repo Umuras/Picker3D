@@ -23,7 +23,9 @@ namespace Assets.Scripts.Data.ValueObjects
         //}
         //Burada da her seviye için poolsdata bilgisini tutuyoruz.
         public List<PoolData> Pools;
-
+        //ScriptableObject üzerinden bu değeri dolduracaksın o leveldaki toplam toplanacak toplanabilir sayısını
+        //sonra topladığın obje sayısı ile oranlayıp yüzdelik değeri bulacaksın, yüzde kaçını topladığını
+        public short TotalSpawnedCollectableCount;
 
     }
 }

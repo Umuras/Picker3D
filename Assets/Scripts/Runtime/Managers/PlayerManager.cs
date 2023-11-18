@@ -102,6 +102,10 @@ public class PlayerManager : MonoBehaviour
     {
         //Stage tamamlandýðýnda yeni stage deðerine geçiþ saðlanýyor 1 arttýrýlarak.
         StageValue = (byte)++value;
+        movementController.IsReadyToPlay(true);
+        meshController.ScaleUpPlayer();
+        meshController.PlayConfetti();
+        meshController.ShowUpText();
     }
 
     private void OnFinishAreaEntered()

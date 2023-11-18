@@ -30,26 +30,35 @@ public class PlayerPhysicsController : MonoBehaviour
             //Burada belli süre içerisinde playerýn topladýðý ve havuz içindeki objelerin sayýsýný kontrol edeceðiz eðer baþarýlý ise devam
             //edecek deðilse fail ekraný gelecek.
 
-            //DOVirtual Dotweenin özel bir classýdýr. Bu classýn içinde çok güzel fonksiyonlar var. Bir tanesi asenkron bir þekilde fonksiyon tetiklemeyi
-            //saðlýyor. Sinyal tetikleyip baþka classlara eriþme þansýmýz var. Aðýrlýklý olarak DelayedCall fonksiyonu geliyor. Gecikmeli asenkron
+            //DOVirtual Dotweenin özel bir classýdýr. Bu classýn içinde çok güzel fonksiyon tipleri var. Bir tanesi asenkron bir þekilde fonksiyon tetiklemeyi
+            //saðlýyor. Bulunduðunuz classtaki Invoke fonksiyonu gibi düþünebilirsin ama burda daha doðru þekilde çalýþýyor. Asenkronluðu daha doðru
+            //þekilde çalýþýyor. Bir de sadece bulunduðu class deðil, 
+            //Sinyal tetikleyip baþka classlara eriþme þansýmýz var. Aðýrlýklý olarak DelayedCall fonksiyonu geliyor. Gecikmeli asenkron
             //fonksiyon çaðýrmasýnda çok iyi.
-            //DelayedCall kullanmamýzýn sebebi gecikmeli bir þekilde fonksiyon çaðýrmak. Bunu neden yapýyoruz toplar havuza düþtüken belli bir süre sonra
-            //o toplarýn havuzdan yok olmasýný istiyoruz o yüzden.
+            //DelayedCall kullanmamýzýn sebebi gecikmeli bir þekilde fonksiyon çaðýrmak. Bunu neden yapýyoruz toplar havuza düþtükten belli bir süre sonra
+            //o toplarýn adetine bakýp ona göre iþlem yapýp havuzdan yok olmasýný istiyoruz o yüzden.
             DOVirtual.DelayedCall(3, () =>
             {
+                //Burada other dediði havuz oluyor collectible objelerinin toplandýðý yer.Onun parent gameobjectine eriþip childobjeleri üzerinden
+                //PoolController Scriptine eriþip TakeResults fonksiyonunu çalýþtýrýyoruz.
+                //PoolControllerdan almamýzýn sebebi toplam toplanan obje sayýsýný ve toplanacak obje sayýsýný PoolController üzerinde tutuyoruz.
                 bool result = other.transform.parent.GetComponentInChildren<PoolController>()
                 .TakeResults(manager.StageValue);
 
                 if (result)
                 {
+                    //Bulunduðumuz stage deðerini gönderiyoruz 2 seviye arasý 3 stage var hangisindeysek o gidiyor.
                     CoreGameSignals.Instance.onStageAreSuccessful?.Invoke(manager.StageValue);
+                    //Player tekrardan hareket edilebilir hale geliyor.
                     InputSignals.Instance.onEnableInput?.Invoke();
                 }
                 else
                 {
+                    //Karakter durduruluyor ve Fail Panelini oyuna getiriyoruz.
                     CoreGameSignals.Instance.onLevelFailed?.Invoke();
                 }
             });
+            //if(other.CompareTag(_stageArea)) burdaki iften çýkýyor aþaðýdaki þartlara boþ yere bakmasýn diye yazýlýyor.
             return;
         }
 
@@ -68,13 +77,15 @@ public class PlayerPhysicsController : MonoBehaviour
         }
     }
 
+    //Bunu yazmamýzýn sebebi ForceBallsToPoolCommand üzerinde forcepos konumunu doðru yazmýþmýyýz collectiblelar gerçekten orada mý toplanýyor
+    //onun tespitini yapmak için yapýyoruz. Physics.OverlapSphere'ýn testi için.
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Transform transform1 = manager.transform;
         Vector3 position1 = transform1.position;
 
-        Gizmos.DrawSphere(new Vector3(position1.x, position1.y + 1f, position1.z + 1f), 1.35f);
+        Gizmos.DrawSphere(new Vector3(position1.x, position1.y - 1f, position1.z + 0.9f), 1.7f);
     }
 
 

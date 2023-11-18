@@ -15,6 +15,11 @@ public class PlayerMeshController : MonoBehaviour
 
     private PlayerMeshData _data;
 
+    private void Awake()
+    {
+        scaleText.gameObject.SetActive(false);
+    }
+
     //Manager tarafýndan gelen data olduðu için internal yaptýk.
     internal void SetData(PlayerMeshData data)
     {
@@ -28,6 +33,7 @@ public class PlayerMeshController : MonoBehaviour
 
     internal void ShowUpText()
     {
+        scaleText.gameObject.SetActive(true);
         //Text görünür hale geliyor
         scaleText.DOFade(1, 0).SetEase(Ease.Flash).OnComplete(() =>
         {

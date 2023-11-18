@@ -105,7 +105,10 @@ public class LevelManager : MonoBehaviour
 
     private byte OnGetLevelValue()
     {
-        return (byte)_currentLevel;
+        //PoolControllerde GetPoolData derken o anki seviyemize ihtiyaç duyuyoruz ve bu fonksiyonu kullanýyoruz
+        //Bu iþlemizi yapmamýzýn Startdaki açýklamanýn aynýsý yüzünden currentLevel sürekli artarak devam ediyor ama bizim yaptýðýmýz
+        //seviye ondan az olunca hata oluþacaðý için bu þekilde mod alýyoruz.
+        return (byte)((byte)_currentLevel % totalLevelCount);
     }
 
     private void OnNextLevel()
