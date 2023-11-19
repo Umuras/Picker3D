@@ -121,24 +121,37 @@ public class PoolController : MonoBehaviour
             return;
         }
 
-        IncreaseCollectedAmount();
+        IncreaseOrDecreaseCollectedAmount(ChangingCollectedAmount.Increase);
         SetCollectedAmountToPool();
     }
 
-    private void IncreaseCollectedAmount()
+    private void IncreaseOrDecreaseCollectedAmount(ChangingCollectedAmount operation)
     {
-        _collectedCount++;
+        switch (operation)
+        {
+            case ChangingCollectedAmount.Increase:
+                _collectedCount++;
+                break;
+            case ChangingCollectedAmount.Decrase:
+                _collectedCount--;
+                break;
+        }
     }
+
+    //private void IncreaseCollectedAmount()
+    //{
+    //    _collectedCount++;
+    //}
 
     private void SetCollectedAmountToPool()
     {
         poolText.text = $"{_collectedCount}/{_data.RequiredObjectCount}";
     }
     //Decrease ve Increase iþlemi tek bir fonksiyon üzerinden yapýlabilir mi düþün
-    private void DecreaseCollectedAmount()
-    {
-        _collectedCount--;
-    }
+    //private void DecreaseCollectedAmount()
+    //{
+    //    _collectedCount--;
+    //}
 
     private void OnTriggerExit(Collider other)
     {
@@ -147,9 +160,13 @@ public class PoolController : MonoBehaviour
             return;
         }
 
-        DecreaseCollectedAmount();
+        IncreaseOrDecreaseCollectedAmount(ChangingCollectedAmount.Decrase);
         SetCollectedAmountToPool();
     }
 
-   
+   private enum ChangingCollectedAmount
+    {
+        Increase,
+        Decrase
+    }
 }

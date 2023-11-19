@@ -56,16 +56,13 @@ public class ForceBallsToPoolCommand
         collectableColliderList.Clear();
     }
 
-    //[DrawGizmo(GizmoType.Selected | GizmoType.Active)]
-    //public static void OnDrawGizmos(PlayerManager manager, GizmoType gizmoType)
-    //{
-    //    Gizmos.color = Color.yellow;
-    //    Transform transform1 = manager.transform;
-    //    Vector3 position1 = transform1.position;
+    [DrawGizmo(GizmoType.Selected | GizmoType.Active)]
+    public static void OnDrawGizmos(PlayerManager manager, GizmoType gizmoType)
+    {
+        Gizmos.color = Color.yellow;
+        Transform transform1 = manager.transform;
+        Vector3 position1 = transform1.position;
 
-    //    Gizmos.DrawSphere(new Vector3(position1.x, position1.y - 1f, position1.z + 0.9f), 1.7f);
-    //}
-
-   
-        
+        Gizmos.DrawSphere(new Vector3(position1.x, position1.y - 1f, position1.z + 0.9f), 1.7f);
+    }
 }

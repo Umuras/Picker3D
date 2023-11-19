@@ -41,6 +41,7 @@ public class UIManager : MonoBehaviour
 
     private void OnStageAreaSuccessful(byte stageValue)
     {
+        //Stage bittiðinde o stagei temsil eden barýn renginin deðiþmesini saðlýyor.
         UISignals.Instance.onSetStageColor?.Invoke(stageValue);
     }
 

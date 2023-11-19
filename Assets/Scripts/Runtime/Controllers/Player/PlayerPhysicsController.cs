@@ -79,14 +79,14 @@ public class PlayerPhysicsController : MonoBehaviour
 
     //Bunu yazmamýzýn sebebi ForceBallsToPoolCommand üzerinde forcepos konumunu doðru yazmýþmýyýz collectiblelar gerçekten orada mý toplanýyor
     //onun tespitini yapmak için yapýyoruz. Physics.OverlapSphere'ýn testi için.
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Transform transform1 = manager.transform;
-        Vector3 position1 = transform1.position;
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.yellow;
+    //    Transform transform1 = manager.transform;
+    //    Vector3 position1 = transform1.position;
 
-        Gizmos.DrawSphere(new Vector3(position1.x, position1.y - 1f, position1.z + 0.9f), 1.7f);
-    }
+    //    Gizmos.DrawSphere(new Vector3(position1.x, position1.y - 1f, position1.z + 0.9f), 1.7f);
+    //}
 
 
 
