@@ -186,6 +186,11 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 433394135208929777, guid: d8d1486d42506da41a32ac8b04d22d05,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4
+      objectReference: {fileID: 0}
     - target: {fileID: 435101201254735477, guid: d8d1486d42506da41a32ac8b04d22d05,
         type: 3}
       propertyPath: m_fontSize
@@ -215,6 +220,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3398441723286685024}
     m_Modifications:
+    - target: {fileID: 1510217645298286874, guid: 4598c25495f09e44d8146c1c2b5051db,
+        type: 3}
+      propertyPath: stageID
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1819977566778375030, guid: 4598c25495f09e44d8146c1c2b5051db,
         type: 3}
       propertyPath: m_fontAsset
@@ -359,6 +369,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3398441723286685024}
     m_Modifications:
+    - target: {fileID: 1510217645298286874, guid: 4598c25495f09e44d8146c1c2b5051db,
+        type: 3}
+      propertyPath: stageID
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1819977566778375030, guid: 4598c25495f09e44d8146c1c2b5051db,
         type: 3}
       propertyPath: m_fontAsset

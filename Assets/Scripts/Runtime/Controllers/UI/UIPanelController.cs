@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class UIPanelController : MonoBehaviour
 {
-    //Canvas içerisindeki layer 0,1,2 gameobjectlirini bu listenin içine yerleþtirip bunlarýn içine panelleri yükleyeceðiz.
+    //Canvas içerisindeki layer 0,1,2 gameobjectlerini bu listenin içine yerleþtirip bunlarýn içine panelleri yükleyeceðiz.
     [SerializeField]
     private List<Transform> layers = new List<Transform>();
 
@@ -28,7 +28,7 @@ public class UIPanelController : MonoBehaviour
         {
             if (layer.childCount <= 0)
             {
-                return;
+                continue;
             }
 
 #if UNITY_EDITOR

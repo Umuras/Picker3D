@@ -66,7 +66,6 @@ public class PlayerPhysicsController : MonoBehaviour
         {
             CoreGameSignals.Instance.onFinishAreaEntered?.Invoke();
             InputSignals.Instance.onDisableInput?.Invoke();
-            CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
             return;
         }
 
