@@ -6,6 +6,7 @@ using DG.Tweening;
 using NaughtyAttributes;
 using System;
 using Unity.Mathematics;
+using UnityEditor.ShaderGraph.Internal;
 
 public class PoolController : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class PoolController : MonoBehaviour
     //Poolun rengini deðiþtirmek için kullanýyoruz.
     [SerializeField]
     private new Renderer renderer;
+    [SerializeField]
+    private ParticleSystem ballDestructionParticle;
 
     [ShowNonSerializedField]
     private PoolData _data;
@@ -28,6 +31,8 @@ public class PoolController : MonoBehaviour
     [ShowNonSerializedField]
     private byte _collectedCount;
     private float3 poolAfterColor = new float3(0.2078432f, 0.3058824f, 0.5294118f);
+    private GameObject _collectableParticles;
+    private bool _isThereCollectableParticles;
 
     private readonly string _collectable = "Collectable";
 
@@ -53,6 +58,7 @@ public class PoolController : MonoBehaviour
     {
         CoreGameSignals.Instance.onStageAreSuccessful += OnActiveTweens;
         CoreGameSignals.Instance.onStageAreSuccessful += OnChangePoolColor;
+        CoreGameSignals.Instance.onDestroyCollectibleParticles += OnDestroyCollectableParticles;
     }
 
     private void OnChangePoolColor(byte stageValue)
@@ -79,11 +85,16 @@ public class PoolController : MonoBehaviour
             tween.DOPlay();
         }
     }
+    private void OnDestroyCollectableParticles()
+    {
+        Destroy(_collectableParticles);
+    }
 
     private void UnSubscribeEvents()
     {
         CoreGameSignals.Instance.onStageAreSuccessful -= OnActiveTweens;
         CoreGameSignals.Instance.onStageAreSuccessful -= OnChangePoolColor;
+        CoreGameSignals.Instance.onDestroyCollectibleParticles -= OnDestroyCollectableParticles;
     }
 
     private void OnDisable()
@@ -120,9 +131,21 @@ public class PoolController : MonoBehaviour
         {
             return;
         }
-
+        
         IncreaseOrDecreaseCollectedAmount(ChangingCollectedAmount.Increase);
         SetCollectedAmountToPool();
+        if (!_isThereCollectableParticles)
+        {
+            CreateAndSetParentCollectableParticles();
+        }
+        DoEmit(other.transform, _collectableParticles);
+    }
+
+    private void CreateAndSetParentCollectableParticles()
+    {
+        _collectableParticles = new GameObject("CollectableParticles");
+        _collectableParticles.transform.SetParent(transform.parent);
+        _isThereCollectableParticles = true;
     }
 
     private void IncreaseOrDecreaseCollectedAmount(ChangingCollectedAmount operation)
@@ -136,6 +159,21 @@ public class PoolController : MonoBehaviour
                 _collectedCount--;
                 break;
         }
+    }
+
+    
+    private void DoEmit(Transform collectable, GameObject collectableParticles)
+    {
+        //Emit özelliði var olan particle sisteminde olan particlelarýn üzerine ek particle ekler ve o eklenen
+        //particlelar üzerinde iþlem yapabilmek için ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
+        //yapýsý kullanýlýr.
+        ParticleSystem ballparticle = Instantiate(ballDestructionParticle, collectableParticles.transform);
+        ballparticle.transform.position = collectable.position;
+        ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
+        emitParams.startColor = Color.red;
+        //Burada ise emitParamsý ekleyerek eklenen 10 tane particleýn ne özelliði taþýyacaðýný belirliyoruz.
+        ballparticle.Emit(emitParams,10);
+        ballparticle.Play();
     }
 
     //private void IncreaseCollectedAmount()

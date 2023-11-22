@@ -51,6 +51,7 @@ public class PlayerPhysicsController : MonoBehaviour
                     CoreGameSignals.Instance.onStageAreSuccessful?.Invoke(manager.StageValue);
                     //Player tekrardan hareket edilebilir hale geliyor.
                     InputSignals.Instance.onEnableInput?.Invoke();
+                    CoreGameSignals.Instance.onDestroyCollectibleParticles?.Invoke();
                 }
                 else
                 {

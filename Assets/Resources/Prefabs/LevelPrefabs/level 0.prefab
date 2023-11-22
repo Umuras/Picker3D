@@ -518,6 +518,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3398441723286685024}
     m_Modifications:
+    - target: {fileID: 1510217645298286874, guid: 4598c25495f09e44d8146c1c2b5051db,
+        type: 3}
+      propertyPath: ballDestructionParticle
+      value: 
+      objectReference: {fileID: 789695307255465825, guid: cc6ac80e26fcb4e88993773f2ff5a343,
+        type: 3}
     - target: {fileID: 1819977566778375030, guid: 4598c25495f09e44d8146c1c2b5051db,
         type: 3}
       propertyPath: m_fontAsset
