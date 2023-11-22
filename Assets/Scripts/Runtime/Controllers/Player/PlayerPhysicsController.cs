@@ -47,11 +47,15 @@ public class PlayerPhysicsController : MonoBehaviour
 
                 if (result)
                 {
+                    //promise yapýsý kullanýlarak veya await task particlellar bittikten sonra onStageAreaSuccessfull çalýþtýrýlacak
                     //Bulunduðumuz stage deðerini gönderiyoruz 2 seviye arasý 3 stage var hangisindeysek o gidiyor.
-                    CoreGameSignals.Instance.onStageAreSuccessful?.Invoke(manager.StageValue);
+                    CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
                     //Player tekrardan hareket edilebilir hale geliyor.
                     InputSignals.Instance.onEnableInput?.Invoke();
-                    CoreGameSignals.Instance.onDestroyCollectibleParticles?.Invoke();
+                    //if (manager.StageValue == 2)
+                    //{
+                    //    CoreGameSignals.Instance.onDestroyCollectibleParticles?.Invoke();
+                    //}
                 }
                 else
                 {

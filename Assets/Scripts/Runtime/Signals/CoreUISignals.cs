@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CoreUISignals : MonoBehaviour
+public class CoreUISignals : MonoSingleton<CoreUISignals>
 {
     #region Singleton
 
-    public static CoreUISignals Instance;
+    //public static CoreUISignals Instance;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+    //private void Awake()
+    //{
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //        return;
+    //    }
 
-        Instance = this;
-    }
+    //    Instance = this;
+    //}
 
     #endregion
 

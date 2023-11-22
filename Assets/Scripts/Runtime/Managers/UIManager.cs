@@ -16,7 +16,7 @@ public class UIManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
         CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
         CoreGameSignals.Instance.onReset += OnReset;
-        CoreGameSignals.Instance.onStageAreSuccessful += OnStageAreaSuccessful;
+        CoreGameSignals.Instance.onStageAreaSuccessful += OnStageAreaSuccessful;
     }
 
     private void OnLevelFailed()
@@ -59,7 +59,7 @@ public class UIManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
         CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
         CoreGameSignals.Instance.onReset -= OnReset;
-        CoreGameSignals.Instance.onStageAreSuccessful -= OnStageAreaSuccessful;
+        CoreGameSignals.Instance.onStageAreaSuccessful -= OnStageAreaSuccessful;
     }
 
     private void OnDisable()

@@ -65,7 +65,7 @@ public class PlayerManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelSuccessful += OnLevelSuccessful;
         CoreGameSignals.Instance.onLevelFailed += OnLevelFailed;
         CoreGameSignals.Instance.onStageAreaEntered += OnStageAreaEntered;
-        CoreGameSignals.Instance.onStageAreSuccessful += OnStageAreaSuccessful;
+        CoreGameSignals.Instance.onStageAreaSuccessful += OnStageAreaSuccessful;
         CoreGameSignals.Instance.onFinishAreaEntered += OnFinishAreaEntered;
         CoreGameSignals.Instance.onReset += OnReset;
     }
@@ -142,7 +142,7 @@ public class PlayerManager : MonoBehaviour
         CoreGameSignals.Instance.onLevelSuccessful -= OnLevelSuccessful;
         CoreGameSignals.Instance.onLevelFailed -= OnLevelFailed;
         CoreGameSignals.Instance.onStageAreaEntered -= OnStageAreaEntered;
-        CoreGameSignals.Instance.onStageAreSuccessful -= OnStageAreaSuccessful;
+        CoreGameSignals.Instance.onStageAreaSuccessful -= OnStageAreaSuccessful;
         CoreGameSignals.Instance.onFinishAreaEntered -= OnFinishAreaEntered;
         CoreGameSignals.Instance.onReset -= OnReset;
     }

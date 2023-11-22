@@ -1,23 +1,23 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class UISignals : MonoBehaviour
+public class UISignals : MonoSingleton<UISignals>
 {
     #region Singleton
 
 
-    public static UISignals Instance;
+    //public static UISignals Instance;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+    //private void Awake()
+    //{
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //        return;
+    //    }
 
-        Instance = this;
-    }
+    //    Instance = this;
+    //}
 
     #endregion
 

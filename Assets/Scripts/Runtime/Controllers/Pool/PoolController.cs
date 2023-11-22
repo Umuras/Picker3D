@@ -7,6 +7,7 @@ using NaughtyAttributes;
 using System;
 using Unity.Mathematics;
 using UnityEditor.ShaderGraph.Internal;
+using UnityEngine.Events;
 
 public class PoolController : MonoBehaviour
 {
@@ -34,6 +35,8 @@ public class PoolController : MonoBehaviour
     private GameObject _collectableParticles;
     private bool _isThereCollectableParticles;
 
+    private int _particleCounter;
+
     private readonly string _collectable = "Collectable";
 
 
@@ -56,9 +59,10 @@ public class PoolController : MonoBehaviour
 
     private void SubscribeEvents()
     {
-        CoreGameSignals.Instance.onStageAreSuccessful += OnActiveTweens;
-        CoreGameSignals.Instance.onStageAreSuccessful += OnChangePoolColor;
+        CoreGameSignals.Instance.onStageAreaSuccessful += OnActiveTweens;
+        CoreGameSignals.Instance.onStageAreaSuccessful += OnChangePoolColor;
         CoreGameSignals.Instance.onDestroyCollectibleParticles += OnDestroyCollectableParticles;
+        CoreGameSignals.Instance.onReset += OnReset;
     }
 
     private void OnChangePoolColor(byte stageValue)
@@ -87,14 +91,22 @@ public class PoolController : MonoBehaviour
     }
     private void OnDestroyCollectableParticles()
     {
-        Destroy(_collectableParticles);
+        ParticleSystem.MainModule mainModule = ballDestructionParticle.main;
+        float particleEndTime = mainModule.duration + mainModule.startLifetime.constant;
+        Destroy(_collectableParticles,particleEndTime);
+    }
+
+    private void OnReset()
+    {
+        _particleCounter = 0;
     }
 
     private void UnSubscribeEvents()
     {
-        CoreGameSignals.Instance.onStageAreSuccessful -= OnActiveTweens;
-        CoreGameSignals.Instance.onStageAreSuccessful -= OnChangePoolColor;
+        CoreGameSignals.Instance.onStageAreaSuccessful -= OnActiveTweens;
+        CoreGameSignals.Instance.onStageAreaSuccessful -= OnChangePoolColor;
         CoreGameSignals.Instance.onDestroyCollectibleParticles -= OnDestroyCollectableParticles;
+        CoreGameSignals.Instance.onReset -= OnReset;
     }
 
     private void OnDisable()
@@ -138,8 +150,13 @@ public class PoolController : MonoBehaviour
         {
             CreateAndSetParentCollectableParticles();
         }
-        DoEmit(other.transform, _collectableParticles);
+        if (_particleCounter < 8)
+        {
+            DoEmit(other.transform, _collectableParticles);
+        }
     }
+
+   
 
     private void CreateAndSetParentCollectableParticles()
     {
@@ -164,6 +181,7 @@ public class PoolController : MonoBehaviour
     
     private void DoEmit(Transform collectable, GameObject collectableParticles)
     {
+        _particleCounter++;
         //Emit özelliði var olan particle sisteminde olan particlelarýn üzerine ek particle ekler ve o eklenen
         //particlelar üzerinde iþlem yapabilmek için ParticleSystem.EmitParams emitParams = new ParticleSystem.EmitParams();
         //yapýsý kullanýlýr.

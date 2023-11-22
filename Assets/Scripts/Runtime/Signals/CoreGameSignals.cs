@@ -5,21 +5,21 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CoreGameSignals : MonoBehaviour
+public class CoreGameSignals : MonoSingleton<CoreGameSignals>
 {
     #region Singleton
-    public static CoreGameSignals Instance;
+    //public static CoreGameSignals Instance;
 
-    private void Awake()
-    {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
+    //private void Awake()
+    //{
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //        return;
+    //    }
 
-        Instance = this;
-    }
+    //    Instance = this;
+    //}
     #endregion
 
     public UnityAction<byte> onLevelInitialize = delegate { };
@@ -31,6 +31,7 @@ public class CoreGameSignals : MonoBehaviour
     public UnityAction onReset = delegate { };
     public Func<byte> onGetLevelValue = delegate { return 0; };
     public UnityAction onStageAreaEntered = delegate { };
-    public UnityAction<byte> onStageAreSuccessful = delegate { };
+    public UnityAction<byte> onStageAreaSuccessful = delegate { };
     public UnityAction onFinishAreaEntered = delegate { }; //Bu kýsmý hoca yapmayacak biz yapacaðýz.
+    public UnityAction onDestroyCollectibleParticles = delegate { };
 }
