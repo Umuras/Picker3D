@@ -12,6 +12,11 @@ public class PlayerMeshController : MonoBehaviour
     private TextMeshPro scaleText;
     [SerializeField]
     private ParticleSystem confetti;
+    [SerializeField]
+    private ParticleSystem flameParticleLeft;
+    [SerializeField]
+    private ParticleSystem flameParticleRight;
+
 
     private PlayerMeshData _data;
 
@@ -60,6 +65,20 @@ public class PlayerMeshController : MonoBehaviour
         //    rotation = transform.localRotation,
         //    velocity = Vector3.zero
         //});
+    }
+
+    internal void PlayFlameParticle()
+    {
+        flameParticleLeft.gameObject.SetActive(true);
+        flameParticleRight.gameObject.SetActive(true);
+        flameParticleLeft.Play();
+        flameParticleRight.Play();
+    }
+
+    internal void SetDeActiveFlameParticle()
+    {
+        flameParticleLeft.gameObject.SetActive(false);
+        flameParticleRight.gameObject.SetActive(false);
     }
 
     //Bu reset mini game'e geçiþ için yazýldý.

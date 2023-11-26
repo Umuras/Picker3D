@@ -42,14 +42,16 @@ public class PlayerPhysicsController : MonoBehaviour
                 //Burada other dediði havuz oluyor collectible objelerinin toplandýðý yer.Onun parent gameobjectine eriþip childobjeleri üzerinden
                 //PoolController Scriptine eriþip TakeResults fonksiyonunu çalýþtýrýyoruz.
                 //PoolControllerdan almamýzýn sebebi toplam toplanan obje sayýsýný ve toplanacak obje sayýsýný PoolController üzerinde tutuyoruz.
-                bool result = other.transform.parent.GetComponentInChildren<PoolController>()
-                .TakeResults(manager.StageValue);
+                PoolController poolController = other.transform.parent.GetComponentInChildren<PoolController>();
+                bool result = poolController.TakeResults(manager.StageValue);
 
                 if (result)
                 {
                     //promise yapýsý kullanýlarak veya await task particlellar bittikten sonra onStageAreaSuccessfull çalýþtýrýlacak
                     //Bulunduðumuz stage deðerini gönderiyoruz 2 seviye arasý 3 stage var hangisindeysek o gidiyor.
                     CoreGameSignals.Instance.onStageAreaSuccessful?.Invoke(manager.StageValue);
+                    float rateValue = poolController.OnTakeCollectedTotalCountRate();
+                    UISignals.Instance.onSetTotalCollectableRate?.Invoke(rateValue);
                     //Player tekrardan hareket edilebilir hale geliyor.
                     InputSignals.Instance.onEnableInput?.Invoke();
                     //if (manager.StageValue == 2)
@@ -78,6 +80,7 @@ public class PlayerPhysicsController : MonoBehaviour
         {
             //Write the MiniGame Mechanics
             //42.dkda anlatýyor hoca PlayerControllerde
+            CoreGameSignals.Instance.onMiniGameAreaEntered?.Invoke(other.transform.parent.GetComponentInChildren<PoolController>().OnTakeCollectedTotalCountRate());
         }
     }
 

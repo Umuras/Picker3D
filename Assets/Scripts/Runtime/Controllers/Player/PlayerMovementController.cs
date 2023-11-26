@@ -18,8 +18,18 @@ public class PlayerMovementController : MonoBehaviour
     private bool _isReadyToPlay;
     //Player saða sola hareketindeki x deðeri parmaðýmýzýn x eksenindeki hareketi
     private float _xValue;
+    private int _movementDistanceForMiniGame = 115;
 
     private float2 _clampValues;
+
+    public bool miniGameMove;
+
+    public float rateValue;
+    private float timeCounter = 0f;
+    private float initialSpeed = 5f;
+    private float movementTime = 5f;
+    private float slowingAcceleratation = 2f;
+    
 
 
     internal void SetData(PlayerMovementData data)
@@ -64,11 +74,23 @@ public class PlayerMovementController : MonoBehaviour
 
     private void MovePlayer()
     {
-        //Burada deðiþkene almamýzýn sebebi drawcallý önlemek için her seferinde rigidbody komponentine eriþmek yerine referanslýyoruz.
-        Vector3 velocity = rigidbody.velocity;
-        //Burada ise Playerýn x ve z eksenindeki hýzýný belirliyoruz
-        velocity = new Vector3(_xValue * _data.SidewaySpeed, velocity.y, _data.ForwardSpeed);
-        rigidbody.velocity = velocity;
+        if (!miniGameMove)
+        {
+            //Burada deðiþkene almamýzýn sebebi drawcallý önlemek için her seferinde rigidbody komponentine eriþmek yerine referanslýyoruz.
+            Vector3 velocity = rigidbody.velocity;
+            //Burada ise Playerýn x ve z eksenindeki hýzýný belirliyoruz
+            velocity = new Vector3(_xValue * _data.SidewaySpeed, velocity.y, _data.ForwardSpeed);
+            rigidbody.velocity = velocity;
+        }
+        else
+        {
+            //Burada deðiþkene almamýzýn sebebi drawcallý önlemek için her seferinde rigidbody komponentine eriþmek yerine referanslýyoruz.
+            Vector3 velocity = rigidbody.velocity;
+            //Burada ise Playerýn x ve z eksenindeki hýzýný belirliyoruz
+            velocity += new Vector3(_xValue * _data.SidewaySpeed, velocity.y, 0.1f);
+            rigidbody.velocity = velocity;
+        }
+       
 
         Vector3 position1 = rigidbody.position;
         Vector3 position;
@@ -77,6 +99,22 @@ public class PlayerMovementController : MonoBehaviour
         rigidbody.position = position;
 
         //11.23te kaldýn
+    }
+
+    internal void MovePlayerForMiniGameArea(float rate)
+    {
+        if (timeCounter < movementTime)
+        {
+            float newSpeed = Mathf.Lerp(initialSpeed, 10, timeCounter / movementTime);
+            rigidbody.velocity = new Vector3(_xValue * _data.SidewaySpeed, rigidbody.velocity.y,newSpeed * Time.deltaTime);
+            timeCounter += Time.deltaTime;
+        }
+        else
+        {
+            float newSlowingSpeed = Mathf.Lerp(10, 0f, (timeCounter - movementTime) / movementTime);
+            rigidbody.velocity = new Vector3(_xValue * _data.SidewaySpeed, rigidbody.velocity.y, newSlowingSpeed * Time.deltaTime);
+            timeCounter += Time.deltaTime;
+        }
     }
 
     internal void IsReadyToPlay(bool condition)

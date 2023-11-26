@@ -16,6 +16,8 @@ public class LevelPanelController : MonoBehaviour
     [SerializeField]
     private List<TextMeshProUGUI> levelTexts = new List<TextMeshProUGUI>();
 
+    public TextMeshProUGUI totalCollectableRateText;
+
     private void OnEnable()
     {
         SubscribeEvents();
@@ -25,6 +27,7 @@ public class LevelPanelController : MonoBehaviour
     {
         UISignals.Instance.onSetLevelValue += OnSetLevelValue;
         UISignals.Instance.onSetStageColor += OnSetStageColor;
+        UISignals.Instance.onSetTotalCollectableRate += OnSetTotalCollectableRate;
     }
 
     private void OnSetStageColor(byte stageValue)
@@ -46,11 +49,17 @@ public class LevelPanelController : MonoBehaviour
         //Burada ise bir sonraki seviyeyi gösteriyoruz.
         levelTexts[1].text = additionalValue.ToString();
     }
+    
+    private void OnSetTotalCollectableRate(float rate)
+    {
+        totalCollectableRateText.text = $"% {(int)rate}";
+    }
 
     private void UnSubscribeEvents()
     {
         UISignals.Instance.onSetLevelValue -= OnSetLevelValue;
         UISignals.Instance.onSetStageColor -= OnSetStageColor;
+        UISignals.Instance.onSetTotalCollectableRate -= OnSetTotalCollectableRate;
     }
 
     private void OnDisable()

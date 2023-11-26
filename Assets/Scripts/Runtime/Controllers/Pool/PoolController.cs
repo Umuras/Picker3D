@@ -8,6 +8,7 @@ using System;
 using Unity.Mathematics;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine.Events;
+using Assets.Scripts.Data.ValueObjects;
 
 public class PoolController : MonoBehaviour
 {
@@ -28,6 +29,7 @@ public class PoolController : MonoBehaviour
 
     [ShowNonSerializedField]
     private PoolData _data;
+    private LevelData _levelData;
     //Toplanýlan objelerin adedini tutuyoruz.
     [ShowNonSerializedField]
     private byte _collectedCount;
@@ -36,6 +38,7 @@ public class PoolController : MonoBehaviour
     private bool _isThereCollectableParticles;
 
     private int _particleCounter;
+    private static int _collectedCountWhenRunTakeResult;
 
     private readonly string _collectable = "Collectable";
 
@@ -43,6 +46,7 @@ public class PoolController : MonoBehaviour
     private void Awake()
     {
         _data = GetPoolData();
+        _levelData = GetLevelData();
     }
 
     private PoolData GetPoolData()
@@ -50,6 +54,11 @@ public class PoolController : MonoBehaviour
         //Levels listesi içinde ilk baþta onGetLevelValue sinyali üzerinden o anki seviyeye eriþiyoruz, ardýndan bulunduðumuz seviye üzerinden
         //Pools listesinden stageID üzerinden o stagedeki requiredObjectCount deðerine eriþiyoruz.
         return Resources.Load<CD_Level>("Data/CD_Level").Levels[(int)CoreGameSignals.Instance.onGetLevelValue?.Invoke()].Pools[stageID];
+    }
+
+    private LevelData GetLevelData()
+    {
+        return Resources.Load<CD_Level>("Data/CD_Level").Levels[(int)CoreGameSignals.Instance.onGetLevelValue?.Invoke()];
     }
 
     private void OnEnable()
@@ -62,6 +71,7 @@ public class PoolController : MonoBehaviour
         CoreGameSignals.Instance.onStageAreaSuccessful += OnActiveTweens;
         CoreGameSignals.Instance.onStageAreaSuccessful += OnChangePoolColor;
         CoreGameSignals.Instance.onDestroyCollectibleParticles += OnDestroyCollectableParticles;
+        CoreGameSignals.Instance.onTakeCollectedTotalCountRate += OnTakeCollectedTotalCountRate;
         CoreGameSignals.Instance.onReset += OnReset;
     }
 
@@ -96,9 +106,16 @@ public class PoolController : MonoBehaviour
         Destroy(_collectableParticles,particleEndTime);
     }
 
+    public float OnTakeCollectedTotalCountRate()
+    {
+        float rate = _collectedCountWhenRunTakeResult / (float)_levelData.TotalSpawnedCollectableCount;
+        return rate * 100;
+    }
+
     private void OnReset()
     {
         _particleCounter = 0;
+        _collectedCountWhenRunTakeResult = 0;
     }
 
     private void UnSubscribeEvents()
@@ -106,6 +123,7 @@ public class PoolController : MonoBehaviour
         CoreGameSignals.Instance.onStageAreaSuccessful -= OnActiveTweens;
         CoreGameSignals.Instance.onStageAreaSuccessful -= OnChangePoolColor;
         CoreGameSignals.Instance.onDestroyCollectibleParticles -= OnDestroyCollectableParticles;
+        CoreGameSignals.Instance.onTakeCollectedTotalCountRate -= OnTakeCollectedTotalCountRate;
         CoreGameSignals.Instance.onReset -= OnReset;
     }
 
@@ -131,11 +149,14 @@ public class PoolController : MonoBehaviour
         //_collectedCount >= _data.RequiredObjectCount iþlemini yapacak.
         if (stageID == managerStageValue)
         {
+            _collectedCountWhenRunTakeResult += _collectedCount;
             return _collectedCount >= _data.RequiredObjectCount;
         }
 
         return false;
     }
+
+   
 
     private void OnTriggerEnter(Collider other)
     {

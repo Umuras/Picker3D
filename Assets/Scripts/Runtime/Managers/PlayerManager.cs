@@ -67,6 +67,7 @@ public class PlayerManager : MonoBehaviour
         CoreGameSignals.Instance.onStageAreaEntered += OnStageAreaEntered;
         CoreGameSignals.Instance.onStageAreaSuccessful += OnStageAreaSuccessful;
         CoreGameSignals.Instance.onFinishAreaEntered += OnFinishAreaEntered;
+        CoreGameSignals.Instance.onMiniGameAreaEntered += OnMiniGameAreaEntered;
         CoreGameSignals.Instance.onReset += OnReset;
     }
 
@@ -108,6 +109,13 @@ public class PlayerManager : MonoBehaviour
         meshController.ShowUpText();
     }
 
+    private void OnMiniGameAreaEntered(float rateValue)
+    {
+        meshController.PlayFlameParticle();
+        movementController.miniGameMove = true;
+        movementController.rateValue = rateValue;
+    }
+
     private void OnFinishAreaEntered()
     {
         CoreGameSignals.Instance.onLevelSuccessful?.Invoke();
@@ -144,6 +152,7 @@ public class PlayerManager : MonoBehaviour
         CoreGameSignals.Instance.onStageAreaEntered -= OnStageAreaEntered;
         CoreGameSignals.Instance.onStageAreaSuccessful -= OnStageAreaSuccessful;
         CoreGameSignals.Instance.onFinishAreaEntered -= OnFinishAreaEntered;
+        CoreGameSignals.Instance.onMiniGameAreaEntered -= OnMiniGameAreaEntered;
         CoreGameSignals.Instance.onReset -= OnReset;
     }
 

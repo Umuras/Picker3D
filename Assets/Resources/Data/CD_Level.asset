@@ -17,19 +17,19 @@ MonoBehaviour:
     - RequiredObjectCount: 10
     - RequiredObjectCount: 20
     - RequiredObjectCount: 25
-    TotalSpawnedCollectableCount: 0
+    TotalSpawnedCollectableCount: 108
   - Pools:
     - RequiredObjectCount: 12
     - RequiredObjectCount: 22
-    - RequiredObjectCount: 28
-    TotalSpawnedCollectableCount: 0
+    - RequiredObjectCount: 25
+    TotalSpawnedCollectableCount: 108
   - Pools:
     - RequiredObjectCount: 15
     - RequiredObjectCount: 25
-    - RequiredObjectCount: 30
-    TotalSpawnedCollectableCount: 0
+    - RequiredObjectCount: 25
+    TotalSpawnedCollectableCount: 108
   - Pools:
     - RequiredObjectCount: 18
     - RequiredObjectCount: 28
-    - RequiredObjectCount: 42
-    TotalSpawnedCollectableCount: 0
+    - RequiredObjectCount: 22
+    TotalSpawnedCollectableCount: 108

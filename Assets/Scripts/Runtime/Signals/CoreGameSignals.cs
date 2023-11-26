@@ -34,4 +34,6 @@ public class CoreGameSignals : MonoSingleton<CoreGameSignals>
     public UnityAction<byte> onStageAreaSuccessful = delegate { };
     public UnityAction onFinishAreaEntered = delegate { }; //Bu kýsmý hoca yapmayacak biz yapacaðýz.
     public UnityAction onDestroyCollectibleParticles = delegate { };
+    public Func<float> onTakeCollectedTotalCountRate = delegate { return 0; };
+    public UnityAction<float> onMiniGameAreaEntered = delegate { };
 }
