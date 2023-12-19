@@ -97,8 +97,6 @@ public class PlayerMovementController : MonoBehaviour
         //Playerin x ve y sýnýr pozisyonlarýný belirliyoruz, x ekseninde -3,3 arsýnda hareket edebiliyor, y ve z de o anki pozisyonu ne ise o geliyor
         position = new Vector3(Math.Clamp(position1.x, _clampValues.x, _clampValues.y), (position = rigidbody.position).y, position.z);
         rigidbody.position = position;
-
-        //11.23te kaldýn
     }
 
     internal void MovePlayerForMiniGameArea(float rate)
